@@ -9,7 +9,6 @@ const worksApi ="http://localhost:5678/api/works";
             }
 
             const json= await response.json();
-            console.log(json);
 
             for(let i= 0; i < json.length; i++) {
                 buildFigure(json[i])
@@ -31,3 +30,40 @@ const worksApi ="http://localhost:5678/api/works";
 
     document.querySelector(".gallery").append(figure);   
    }
+
+
+
+   async function getCategories() {
+    const worksApi="http://localhost:5678/api/categories"
+    try{
+        const response= await fetch(worksApi);
+        if (!response.ok) {
+            throw new Error(`Response status:${response.status}`);
+        }
+
+        const json= await response.json();
+        console.log(json);
+
+        for(let i= 0; i < json.length; i++) {
+            buildFilter(json[i])
+
+        }
+
+    }catch(error){
+        console.error(error.message);
+
+    }
+}
+getCategories();
+
+
+function buildFilter(data) {
+  const div= document.createElement("div")
+  div.innerHTML=`${data.name}`;
+
+  document.querySelector(".div_box").append(div); 
+
+}
+
+
+ 
