@@ -1,6 +1,7 @@
 const worksApi ="http://localhost:5678/api/works";
 
-    async function getWorks() {
+    async function getWorks(filter) {
+        document.querySelector(".gallery").innerHTML="";
         const worksApi="http://localhost:5678/api/works"
         try{
             const response= await fetch(worksApi);
@@ -10,17 +11,27 @@ const worksApi ="http://localhost:5678/api/works";
 
             const json= await response.json();
 
-            for(let i= 0; i < json.length; i++) {
-                buildFigure(json[i])
 
+             if (filter ){
+               const filtered=json.filter((data)=>data.categoryId===filter);
+               for(let i= 0; i < filtered.length; i++) {
+                 buildFigure(filtered[i]);
+             }
+           }else{
+               for(let i= 0; i < json.length; i++){
+                 buildFigure(json[i]);
             }
+           }
+
 
         }catch(error){
             console.error(error.message);
 
         }
     }
+    
     getWorks();
+    
 
     
    function buildFigure(data){
@@ -42,8 +53,6 @@ const worksApi ="http://localhost:5678/api/works";
         }
 
         const json= await response.json();
-        console.log(json);
-
         for(let i= 0; i < json.length; i++) {
             buildFilter(json[i])
 
@@ -58,12 +67,17 @@ getCategories();
 
 
 function buildFilter(data) {
-  const div= document.createElement("div")
+  const div= document.createElement("div");
+  div.className= data.id;
+  div.addEventListener("click",()=>getWorks(data.id));
   div.innerHTML=`${data.name}`;
-
   document.querySelector(".div_box").append(div); 
 
 }
+
+document.querySelector(".tous").addEventListener("click", ()=> getWorks());
+
+
 
 
  
