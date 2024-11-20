@@ -30,9 +30,16 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	background-color:#FFFEF8 ;
 }
 ol, ul {
 	list-style: none;
+}
+a{
+	color: black;
+}
+a:visited{
+	color: black;
 }
 blockquote, q {
 	quotes: none;
@@ -208,4 +215,5 @@ footer nav ul {
 	justify-content: flex-end;
 	margin: 2em
 }
+
 
