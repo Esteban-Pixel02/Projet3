@@ -2,10 +2,14 @@
 
 const loginApi = "http://localhost:5678/api/users/login";
 
-async function handleSubmit() {
+document.getElementById("loginform").addEventListener("submit",handleSubmit);
+
+async function handleSubmit(event) {
+  event.preventDefault();
+
   let user = {
-    email: "sophie.bluel@test.tld",
-    password: "S0phie",
+    email: document.getElementById("email").value,
+    password: document.getElementById("password").value,
   };
 
   let response = await fetch(loginApi, {
@@ -16,8 +20,17 @@ async function handleSubmit() {
     body: JSON.stringify(user),
   });
 
+  if(response.status != 200){
+    const errorConnect = document.createElement("div");
+    errorConnect.className = 'error_login';
+    errorConnect.innerHTML = "Il y a eu une erreur";
+    document.querySelector('form').prepend(errorConnect);
+  }
+
   let result = await response.json();
-  console.log(result);
+  const token = result.token;
+  sessionStorage.setItem("authToken",token);
+  window.location.href = "../Common/index.html";
 }
 
-handleSubmit();
+
