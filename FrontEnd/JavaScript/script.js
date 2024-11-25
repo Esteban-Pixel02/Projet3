@@ -1,8 +1,8 @@
-const rootApi ="http://localhost:5678/api";
+const worksApi ="http://localhost:5678/api/works";
 
     async function getWorks(filter) {
         document.querySelector(".gallery").innerHTML="";
-        const worksApi = rootApi+"/works"
+        const worksApi = "http://localhost:5678/api/works"
         try{
             const response= await fetch(worksApi);
             if (!response.ok) {
@@ -76,6 +76,10 @@ function buildFilter(data) {
 }
 
 document.querySelector(".tous").addEventListener("click", ()=> getWorks());
+
+
+
+
 
 
 
