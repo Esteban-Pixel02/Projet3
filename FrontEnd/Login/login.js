@@ -1,36 +1,51 @@
 // PART LOGIN //------------------------------------------------------------------------------------------------------
 
-const loginApi = "http://localhost:5678/api/users/login";
 
-document.getElementById("loginform").addEventListener("submit",handleSubmit);
+document.getElementById("submit").addEventListener("click", async (event) => {
+    
+  event.preventDefault()
 
-async function handleSubmit(event) {
-  event.preventDefault();
+  
+  const email = document.getElementById("email").value
+  const password = document.getElementById("password").value
 
-  let user = {
-    email: document.getElementById("email").value,
-    password: document.getElementById("password").value,
-  };
-
-  let response = await fetch(loginApi, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  });
-
-  if(response.status != 200){
-    const errorConnect = document.createElement("div");
-    errorConnect.className = 'error_login';
-    errorConnect.innerHTML = "Il y a eu une erreur";
-    document.querySelector('form').prepend(errorConnect);
+  const oldError = document.querySelector(".error-message")
+  if (oldError) {
+      oldError.remove()
   }
 
-  let result = await response.json();
-  const token = result.token;
-  sessionStorage.setItem("authToken",token);
-  window.location.href = "../Common/index.html";
-}
+  try {
+      // Envoie une requête POST à l'API pour tenter de se connecter
+      const response = await fetch("http://localhost:5678/api/users/login", {
+          method: "POST", 
+          headers: {
+              "Content-Type": "application/json" 
+          },
+          body: JSON.stringify({ email, password }) 
+      })
+
+      if (!response.ok) {
+          throw new Error("Erreur lors de la connexion")
+      }
 
 
+      const data = await response.json()
+      const token = data.token
+      console.log("Token récupéré :", token)
+
+      
+      sessionStorage.setItem("accessToken", token)
+      window.location.href = "../Common/index.html"
+  } catch (error) {
+      
+
+      // Crée dynamiquement un paragraphe pour afficher un message d'erreur
+      const errorMessage = document.createElement("p")
+      errorMessage.textContent = "“Erreur dans l’identifiant ou le mot de passe”"
+      errorMessage.classList.add("error-message") 
+
+      // Ajoute le message d'erreur à la fin du formulaire
+      const form = document.querySelector("#login form")
+      form.appendChild(errorMessage)
+  }
+})

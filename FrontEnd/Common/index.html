@@ -9,20 +9,27 @@
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="../Common/style.css">
-	<script src="https://kit.fontawesome.com/71456585b1.js" crossorigin="anonymous"></script>
-	<script src="../JavaScript/script.js" defer></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-	<div id="edit">
-		<p><i class="fa-regular fa-pen-to-square"></i>Mode édition</p>
-	</div>
+<!-- Mode Banner -->
+	<aside id="edit-banner">
+		<i class="fa-regular fa-pen-to-square"></i>
+		<p>Mode édition</p>
+	</aside>
+<!-- Fin  -->
 <header>
-	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+	<h1>Sophie Bluel 
+		<span>Architecte d'intérieur</span>
+	</h1>
 	<nav>
 		<ul>
 			<li><a href="#portfolio">projets</a></li>
 			<li><a href="#contact">contact</a></li>
-			<li><a href="../Login/login.html">login</a></li>
+			<li id="login-link"><a href="../Login/login.html">login</a></li>
+			<li id="logout-link">logout</li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -40,15 +47,61 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
-		<div class="div_box">
-		   <div class="tous">Tous</div>	
+		<div id="portfolio-container">
+			<h2 id=portfolio-title>Mes Projets</h2>
+			<!-- Mode administrateur -->
+			<button data-open-modal> <i class="fa-regular fa-pen-to-square"></i>Modifier</button>
+			<dialog data-modal1>
+				<button data-close-modal><i class="fa-solid fa-xmark"></i></button>
+				<h3 id="modalTitle" class="modal-title">
+					Galerie Photo
+				</h3>
+
+				<div class="modal-gallery delete-btn">
+				</div>
+				<hr class="separation"></hr>
+				<button data-open-modal2 class="btn">Ajouter une photo</button>
+			</dialog>
+         
+		   <!-- Modale 2 -->
+		   <dialog data-modal2>
+			<button data-return-modal1><i class="fa-solid fa-arrow-left"></i></button>
+			<button data-close-modal2><i class="fa-solid fa-xmark"></i></button>
+			<h3 class="modal-title">
+				Ajout photo
+			</h3>
+			<form class="modal-form" method="post" action="" enctype="multipart/form-data">
+				<div class="add-picture">
+					<i class="fa-regular fa-image"></i>
+					<label for="picture">+ Ajouter photo</label>
+					<input type="file" name="picture" id="picture">
+				</div>
+				<div class="add-title">
+					<label for="title">Titre</label>
+					<input type="text" name="title" id="title">
+				</div>
+				<div class="select-category">
+					<label for="category">Catégorie</label>
+					<select name="category" id="category">
+					</select>
+				</div>
+				<input type="submit" class="btn add-btn" value="Valider">
+			</form>
+		</dialog>
+     <!-- Fin modale 2 -->
 		</div>
+		
+		<div id="buttons">
+			<button id="0" class="btn-filter btn-filterActive">Tous</button>
+			<button id="1" class="btn-filter">Objets</button>
+			<button id="2" class="btn-filter">Appartements</button>
+			<button id="3" class="btn-filter">Hôtels & restaurants</button>
+		</div>		
 		<div class="gallery">
 		</div>
 	</section>
 	<section id="contact">
-		<h2 id="contact">Contact</h2>
+		<h2>Contact</h2>
 		<p>Vous avez un projet ? Discutons-en !</p>
 		<form action="#" method="post">
 			<label for="name">Nom</label>
@@ -69,5 +122,7 @@
 		</ul>
 	</nav>
 </footer>
+<script src="../HomePage/script.js"></script>
+<script src="../HomePage/modal.js"></script>
 </body>
 </html>
